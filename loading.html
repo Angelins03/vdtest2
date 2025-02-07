@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SVG Hearts</title>
+    <link rel="stylesheet" href="loading.css" />
+  </head>
+  <body>
+    <div class="heart__body">
+      <div class="container">
+        <div class="body__content">
+          <div class="heart"></div>
+
+          <div class="body__text">
+            <p class="loader-txt">Обрабатываем ваш запрос...</p>
+          </div>
+
+          <div class="loader">
+            <div class="progress"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Перенаправление на другой файл HTML через 10 секунд
+      setTimeout(function () {
+        window.location.href = "mainvd.html"; // Укажите имя файла, на который хотите перенаправить
+      }, 5000); // 10000 миллисекунд = 10 секунд
+    </script>
+  </body>
+</html>

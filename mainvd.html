@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mainvd.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+            <div class="wrapper">
+                <svg class="heart" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+                     x="0px" y="0px" width="101.7px" height="87.6px" viewBox="0 0 101.7 87.6" enable-background="new 0 0 101.7 87.6"
+                     xml:space="preserve">
+                <path d="M51,12.8c0-0.1-0.1-0.1-0.1-0.2c0,0.1-0.1,0.1-0.1,0.2C31-10.7,0,0.2,0,28.9c0,27.6,40.7,56.9,50.9,58.8
+                    c10.1-1.8,50.9-31.1,50.9-58.8C101.7,0.2,70.7-10.7,51,12.8z"/>
+                </svg>
+            </div>
+            <div class="main__text">
+                <h1>
+                    <a href="" class="typewrite text" data-period="2000"
+                      data-type='[ "Мой котик любимый", 
+                      "С тобой я узнала, что значит быть по-настоящему счастливой", 
+                      "Спасибо что у меня есть такой замечательный человек как ты", 
+                      "Люблю тебя безумно мой лучик света"]'>
+                      <span class="wrap"></span>
+                    </a>
+                  </h1>
+            </div>
+<!-- 
+            <div class="main__btn">
+                <button>Продолжить</button>
+            </div> -->
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+            $love = $('.heart');
+            for( var i = 0; i < 7; i++) {
+              $('.wrapper').append($love.clone()); 
+            }
+        });
+
+        var TxtType = function(el, toRotate, period) {
+            this.toRotate = toRotate;
+            this.el = el;
+            this.loopNum = 0;
+            this.period = parseInt(period, 10) || 2000; // Период ожидания между повторами
+            this.txt = '';
+            this.tick();
+            this.isDeleting = false;
+        };
+        
+        TxtType.prototype.tick = function() {
+            var i = this.loopNum % this.toRotate.length;
+            var fullTxt = this.toRotate[i];
+        
+            if (this.isDeleting) {
+                this.txt = fullTxt.substring(0, this.txt.length - 1);
+            } else {
+                this.txt = fullTxt.substring(0, this.txt.length + 1);
+            }
+        
+            this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+        
+            var that = this;
+            var delta = 100 - Math.random() * 50; // Уменьшено время для печати
+        
+            if (this.isDeleting) { delta /= 2; }
+        
+            if (!this.isDeleting && this.txt === fullTxt) {
+                delta = this.period; // Время ожидания после полного текста
+                this.isDeleting = true;
+            } else if (this.isDeleting && this.txt === '') {
+                this.isDeleting = false;
+                this.loopNum++;
+                delta = 200; // Уменьшено время для перехода к следующему тексту
+            }
+        
+            setTimeout(function() {
+                that.tick();
+            }, delta);
+        };
+        
+        window.onload = function() {
+            var elements = document.getElementsByClassName('typewrite');
+            for (var i = 0; i < elements.length; i++) {
+                var toRotate = elements[i].getAttribute('data-type');
+                var period = elements[i].getAttribute('data-period');
+                if (toRotate) {
+                    new TxtType(elements[i], JSON.parse(toRotate), period);
+                }
+            }
+            // INJECT CSS
+            var css = document.createElement("style");
+            css.type = "text/css";
+            css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #fff}";
+            document.body.appendChild(css);
+        };
+
+    </script>
+    
+</body>
+</html>
